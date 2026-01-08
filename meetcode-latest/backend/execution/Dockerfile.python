@@ -1,0 +1,17 @@
+FROM python:3.11-alpine
+
+WORKDIR /app
+
+# Add a non-root user
+RUN adduser -D coderunner
+
+# Copy runner script
+COPY runner.py .
+
+# Switch to non-root user
+USER coderunner
+
+# Set constraints (though Docker run limits are better)
+ENV PYTHONUNBUFFERED=1
+
+CMD ["python", "runner.py"]
